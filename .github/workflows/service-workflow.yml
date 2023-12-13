@@ -12,14 +12,17 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
 
-      - name: Set up JDK 17
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'adopt'
 
       - name: Build application
         run: mvn clean package --projects :${{ inputs.service }} --also-make --batch-mode
 
-      # Build and push docker image
-      # docker build . --build-arg JAR_FILE=services/${{ inputs.service }}/target/app.jar -t <tag>
+      - name: Build and push docker image
+        run: docker build . --build-arg JAR_FILE=services/${{ inputs.service }}/target/app.jar -t ${{ inputs.service }}:latest
+        
+      - name: List images
+        run: docker images 
