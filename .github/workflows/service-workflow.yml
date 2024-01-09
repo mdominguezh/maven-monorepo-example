@@ -23,7 +23,13 @@ jobs:
         with:
           java-version: '11.0.15'
           distribution: 'adopt'
-
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.7.0
+        with:
+          checkout-fetch-depth: 0
+          java-version: 11.0.5
+          java-distribution: adopt
+          maven-version: 3.6.0
       - name: Check versions again
         run: |
           mvn -v
