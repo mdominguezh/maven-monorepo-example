@@ -43,3 +43,10 @@ jobs:
         
       - name: List images
         run: docker images 
+      - name: Get docker image
+        run: docker save --output ${{ inputs.service }}-latest.tar ${{ inputs.service }}:latest        
+      - name: Upload image Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.service }}
+          path: ${{ inputs.service }}-latest.tar
